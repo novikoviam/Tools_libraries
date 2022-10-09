@@ -10,17 +10,17 @@ public class JUnitDemoTest {
         System.out.println("### @BeforeAll      !");
     }
     @AfterAll
-    static void setUp(){
+    static void setUp2(){
         System.out.println("### @AfterAll       !");
     }
 
     @BeforeEach
-    void setUp(){
+    void setUp1(){
         System.out.println("### @BeforeEach !");
     }
 
     @AfterEach
-    void setUp(){
+    void setUp4(){
         System.out.println("### @AfterEach  !");
     }
 
