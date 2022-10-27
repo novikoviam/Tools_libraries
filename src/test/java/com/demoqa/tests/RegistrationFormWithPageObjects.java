@@ -1,6 +1,7 @@
-package com.demoqa;
+package com.demoqa.tests;
 
 import com.codeborne.selenide.Configuration;
+import com.demoqa.pages.RegistrationFormPage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Condition.appear;
@@ -8,23 +9,25 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class RegistrationFormTests {
+public class RegistrationFormWithPageObjects {
+    RegistrationFormPage registrationFormPage = new RegistrationFormPage();
 
     @BeforeAll
     static void setUp() {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
-     //   Configuration.browser = "Google Chrome"
+        //   Configuration.browser = "Google Chrome"
         Configuration.holdBrowserOpen = true;
     }
 
     @Test
     void fillFormTest() {
+        registrationFormPage.openPage()
+        .setFirstName("Vladimir")
+        .setLastName("Novikov")
+        .setEmail("novikoviam@ya.ru")
+        .setGender("Other");
 
-        open("/automation-practice-form");
-        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
-        executeJavaScript("$('footer').remove()");
-        executeJavaScript("$('#fixedban').remove()");
 
         //Based fills
         $("#firstName").setValue("Vladimir");
@@ -32,7 +35,7 @@ public class RegistrationFormTests {
         $("#userEmail").setValue("novikoviam@ya.ru");
         $("#genterWrapper").$(byText("Female")).click();
         // OR other examples
-       // $("#gender-radio-1").click();
+        // $("#gender-radio-1").click();
         // $("#gender-radio-3").parent().click();
         // $("[for=gender-radio-2]").click();
         //$(by("for", "gender-radio-2")).click();
@@ -46,7 +49,7 @@ public class RegistrationFormTests {
         $(".react-datepicker__day--012:not(.react-datepicker__day--outside-month)").click();
 
         // Subjects field input not a work
-//        $("#subjectsInput").click();
+//        $("#subjectsInput").click();com.codeborne.selenide.Configuration
 //        $("#subjectsInput").setValue("Math").pressEnter();
         // OR
 //        $("subjectsInput)").sendKeys("Math");
@@ -73,5 +76,27 @@ public class RegistrationFormTests {
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".table-responsive").shouldHave(text("Vladimir Novikov"), text("novikoviam@ya.ru"),
                 text("Female"), text("8800333234"), text("12 January,2005"));
+    }
+
+    @Test
+    void fillFormWithMinimumDataTest() {
+        registrationFormPage.openPage()
+                .setFirstName("Vladimir")
+                .setLastName("Novikov")
+                .setEmail("novikoviam@ya.ru")
+                .setGender("Other");
+
+        $("#userNumber").setValue("88003332345");
+        $("#submit").click();
+
+        $(".modal-dialog").should(appear);
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+        $(".table-responsive").shouldHave(text("Vladimir Novikov"), text("novikoviam@ya.ru"),
+                text("Male"), text("8800333234"), text("12 January,2005"));
+
+
+
+
+
     }
 }
