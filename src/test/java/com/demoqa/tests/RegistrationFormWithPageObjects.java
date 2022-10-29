@@ -4,6 +4,8 @@ import com.codeborne.selenide.Configuration;
 import com.demoqa.pages.RegistrationFormPage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -26,7 +28,13 @@ public class RegistrationFormWithPageObjects {
         .setFirstName("Vladimir")
         .setLastName("Novikov")
         .setEmail("novikoviam@ya.ru")
-        .setGender("Other");
+        .setGender("Other")
+        .setNumber("10101010")
+        .setCurrentAddress("Curent Address")
+        .setBirthDate("10","10","2010")
+        .checkResultsTableVisible()
+        ;
+
 
 
         //Based fills
@@ -41,12 +49,17 @@ public class RegistrationFormWithPageObjects {
         //$(by("for", "gender-radio-2")).click();
         $("#userNumber").setValue("88003332345");
         $("#currentAddress").setValue("Some test address input");
-        $("#dateOfBirthInput").click();
+
 
         // Date
+      /*  $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("January");
         $(".react-datepicker__year-select").selectOption("2005");
         $(".react-datepicker__day--012:not(.react-datepicker__day--outside-month)").click();
+*/
+/*
+        registrationFormPage .setBirthDate("20", "10", "2000");
+*/
 
         // Subjects field input not a work
 //        $("#subjectsInput").click();com.codeborne.selenide.Configuration
@@ -73,9 +86,15 @@ public class RegistrationFormWithPageObjects {
         //Check
 
         $(".modal-dialog").should(appear);
-        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").shouldHave(text("Vladimir Novikov"), text("novikoviam@ya.ru"),
-                text("Female"), text("8800333234"), text("12 January,2005"));
+
+        registrationFormPage.checkResultsTableVisible();
+        registrationFormPage.checkResult("Student Name", "Vladimir Novikov");
+        registrationFormPage.checkResult("Student Email", "novikoviam@ya.ru");
+        registrationFormPage.checkResult("Date of Birth", "12 January, 2005");
+
+
+/*        $(".table-responsive").shouldHave(text("Vladimir Novikov"), text("novikoviam@ya.ru"),
+                text("Female"), text("8800333234"), text("12 January,2005"));*/
     }
 
     @Test
@@ -86,15 +105,13 @@ public class RegistrationFormWithPageObjects {
                 .setEmail("novikoviam@ya.ru")
                 .setGender("Other");
 
-        $("#userNumber").setValue("88003332345");
+     /*   $("#userNumber").setValue("88003332345");
         $("#submit").click();
-
+*/
         $(".modal-dialog").should(appear);
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".table-responsive").shouldHave(text("Vladimir Novikov"), text("novikoviam@ya.ru"),
-                text("Male"), text("8800333234"), text("12 January,2005"));
-
-
+                text("Other"));
 
 
 

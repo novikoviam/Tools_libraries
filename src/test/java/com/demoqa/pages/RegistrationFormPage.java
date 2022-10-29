@@ -2,8 +2,11 @@ package com.demoqa.pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.demoqa.pages.components.CalendarComponent;
+import com.demoqa.pages.components.ResultTableComponent;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
@@ -11,11 +14,17 @@ import static com.codeborne.selenide.Selenide.executeJavaScript;
 public class RegistrationFormPage {
 
     //Elements
-
+    private CalendarComponent calendarComponent = new CalendarComponent();
+    private ResultTableComponent resultTableComponent = new ResultTableComponent();
     private SelenideElement
             firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
-            emailInput = $("#userEmail");
+            emailInput = $("#userEmail"),
+            currentAddressInput = $("#currentAddress"),
+            hobbiesCheckBoxes =  $("hobbiesWrapper");
+
+
+    private final static String TITLE_TEXT = "Thanks for submitting the form";
 
     // Actions
 
@@ -33,10 +42,10 @@ public class RegistrationFormPage {
 
 
     }
-    public RegistrationFormPage clearFirstName(String value) {
+  /*  public RegistrationFormPage clearFirstName(String value) {
         firstNameInput.clear();
         return this;
-    }
+    }*/
     public RegistrationFormPage setLastName(String value) {
        lastNameInput.setValue(value);
        return this;
@@ -52,7 +61,33 @@ public class RegistrationFormPage {
         return this;
     }
 
+        public RegistrationFormPage setBirthDate(String day, String month, String year ) {
+            $("#dateOfBirthInput").click();
+            calendarComponent.setDate(day, month, year);
+            return this;
+    } public RegistrationFormPage setNumber(String value) {
+            $("#userNumber").setValue(value);
+            return this;
+    }
+    public RegistrationFormPage setCurrentAddress(String value) {
+           currentAddressInput.setValue("Some test address input");
+
+        return this;
+    }
+    public RegistrationFormPage hobbiesCheckBoxes (String value) {
+           hobbiesCheckBoxes.setValue("Some test address input");
+
+        return this;
+    }
+    public RegistrationFormPage checkResultsTableVisible() {
+        resultTableComponent.checkVisible();
+        return this;
+    }
+        public RegistrationFormPage checkResult(String key, String value) {
+            resultTableComponent.checkResult(key, value);
+
+            return this;
 
 
-
+        }
 }
