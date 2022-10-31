@@ -2,6 +2,7 @@ package com.demoqa.pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.demoqa.pages.components.AddressComponent;
 import com.demoqa.pages.components.CalendarComponent;
 import com.demoqa.pages.components.ResultTableComponent;
 
@@ -21,7 +22,12 @@ public class RegistrationFormPage {
             lastNameInput = $("#lastName"),
             emailInput = $("#userEmail"),
             currentAddressInput = $("#currentAddress"),
-            hobbiesCheckBoxes =  $("hobbiesWrapper");
+            hobbiesCheckBoxes =  $("#hobbiesWrapper"),
+            subjectsInput = $("#subjectsInput"),
+            picUploading = $("#uploadPicture"),
+            clickSubmit = $("#submit");
+
+
 
 
     private final static String TITLE_TEXT = "Thanks for submitting the form";
@@ -69,25 +75,42 @@ public class RegistrationFormPage {
             $("#userNumber").setValue(value);
             return this;
     }
-    public RegistrationFormPage setCurrentAddress(String value) {
-           currentAddressInput.setValue("Some test address input");
+/*    public RegistrationFormPage setCurrentAddress(String address, String state, String city) {
+           AddressComponent.setAddress("address, state, city");
+
+        return this;
+    }*/
+    public RegistrationFormPage setHobbies(String value) {
+        hobbiesCheckBoxes.$(byText(value)).click();
 
         return this;
     }
-    public RegistrationFormPage hobbiesCheckBoxes (String value) {
-           hobbiesCheckBoxes.setValue("Some test address input");
+
+    public RegistrationFormPage setPicture (String file) {
+        picUploading.uploadFromClasspath(file);
+
+        return this;
+    }
+
+    public RegistrationFormPage subjectsInput (String value){
+        subjectsInput.setValue(value).pressEnter();
+        return this;
+    }
+    public RegistrationFormPage clickSubmit() {
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
+        clickSubmit.click();
 
         return this;
     }
     public RegistrationFormPage checkResultsTableVisible() {
         resultTableComponent.checkVisible();
+
         return this;
     }
         public RegistrationFormPage checkResult(String key, String value) {
             resultTableComponent.checkResult(key, value);
 
             return this;
-
-
         }
 }

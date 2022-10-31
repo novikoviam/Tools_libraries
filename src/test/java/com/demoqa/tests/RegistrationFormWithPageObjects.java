@@ -30,14 +30,17 @@ public class RegistrationFormWithPageObjects {
         .setEmail("novikoviam@ya.ru")
         .setGender("Other")
         .setNumber("10101010")
-        .setCurrentAddress("Curent Address")
-        .setBirthDate("10","10","2010")
-        .checkResultsTableVisible()
+/*        .setCurrentAddress("address, city, state")*/
+/*        .setBirthDate("10","10","2010")*/
+        .setHobbies("Reading")
+        .subjectsInput("Math")
+        .setPicture("1.png")
+/*        .checkResultsTableVisible()*/
         ;
 
 
 
-        //Based fills
+/*        //Based fills
         $("#firstName").setValue("Vladimir");
         $("#lastName").setValue("Novikov");
         $("#userEmail").setValue("novikoviam@ya.ru");
@@ -52,14 +55,14 @@ public class RegistrationFormWithPageObjects {
 
 
         // Date
-      /*  $("#dateOfBirthInput").click();
+      *//*  $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("January");
         $(".react-datepicker__year-select").selectOption("2005");
         $(".react-datepicker__day--012:not(.react-datepicker__day--outside-month)").click();
-*/
-/*
+*//*
+*//*
         registrationFormPage .setBirthDate("20", "10", "2000");
-*/
+*//*
 
         // Subjects field input not a work
 //        $("#subjectsInput").click();com.codeborne.selenide.Configuration
@@ -93,7 +96,7 @@ public class RegistrationFormWithPageObjects {
         registrationFormPage.checkResult("Date of Birth", "12 January, 2005");
 
 
-/*        $(".table-responsive").shouldHave(text("Vladimir Novikov"), text("novikoviam@ya.ru"),
+*//*        $(".table-responsive").shouldHave(text("Vladimir Novikov"), text("novikoviam@ya.ru"),
                 text("Female"), text("8800333234"), text("12 January,2005"));*/
     }
 
@@ -105,15 +108,9 @@ public class RegistrationFormWithPageObjects {
                 .setEmail("novikoviam@ya.ru")
                 .setGender("Other");
 
-     /*   $("#userNumber").setValue("88003332345");
-        $("#submit").click();
-*/
         $(".modal-dialog").should(appear);
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".table-responsive").shouldHave(text("Vladimir Novikov"), text("novikoviam@ya.ru"),
                 text("Other"));
-
-
-
     }
 }
